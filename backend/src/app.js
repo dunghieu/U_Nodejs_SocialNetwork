@@ -60,7 +60,7 @@ mongoose
   .connect(
     'mongodb+srv://hyouka:leaf2201@cluster0.umlap.mongodb.net/messages?retryWrites=true&w=majority'
   )
-  .then(() => {
+  .then((result) => {
     app.listen(8080, () => {
       console.log('Server is running on port 8080');
     });

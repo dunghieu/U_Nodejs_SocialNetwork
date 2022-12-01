@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { validationResult } = require('express-validator');
+const {validationResult} = require('express-validator');
 
 const Post = require('../models/post');
 const User = require('../models/user');
@@ -40,7 +40,7 @@ exports.createPost = async (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  const { title, content } = req.body;
+  const {title, content} = req.body;
   const imageUrl = 'images/' + req.file.filename;
   let creator;
 
@@ -55,12 +55,12 @@ exports.createPost = async (req, res, next) => {
     const user = await User.findById(req.userId);
     creator = user;
     user.posts.push(post);
-    await user.save();
+    const savedUser = await user.save();
 
     res.status(201).json({
       message: 'Post created successfully',
       post: post,
-      creator: { _id: creator._id, name: creator.name },
+      creator: {_id: creator._id, name: creator.name},
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -99,7 +99,7 @@ exports.updatePost = async (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  const { title, content } = req.body;
+  const {title, content} = req.body;
   let imageUrl = req.body.image;
   if (req.file) {
     imageUrl = 'images/' + req.file.filename;
